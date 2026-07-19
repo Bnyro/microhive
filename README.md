@@ -8,10 +8,12 @@ There are various HTTP servers with MicroPython compatibility, but they're often
 Microhive is aiming to provide a similar programming interface as FastAPI or Flask (but only provides a very small subset of their functionality).
 
 ### Usage
+If you run it with MicroPython, first make sure to connect to a WiFi or start a hotspot on the MCU. If running on an ESP8266, you can follow up on the [official networking documentation](https://docs.micropython.org/en/latest/esp8266/quickref.html#networking).
+
 ```py
 from microhive import Request, Response, Server
 
-server = Server("localhost", 8080)
+server = Server("0.0.0.0", 80)
 
 
 @server.get("/")
@@ -29,6 +31,8 @@ def method(request: Request):
 
 server.run()
 ```
+
+You can now reach the website by opening the IP address of the MCU (can be obtained with `wlan.ipconfig("addr4")`) in your browser.
 
 ### Related Projects
 - [micropyserver](https://github.com/troublegum/micropyserver)
