@@ -178,29 +178,28 @@ class Server:
             total_sent += conn.send(message[total_sent:])
         conn.close()
 
-    def route(self, path: str, method: str | None = None):
+    def route(self, path: str, methods: list[str] | None = None):
         def decorator(f):
-            def wrapper(request: Request):
-                return f(request)
-
             nonlocal path
             if not path.startswith("/"):
                 path = f"/{path}"
-            self.handlers[(path, method)] = wrapper
 
-            return wrapper
+            # lists can't be dict keys, so we have to join the methods
+            methods_str = ",".join(methods) if methods else None
+            self.handlers[(path, methods_str)] = f
+            return f
 
         return decorator
 
     def get(self, path: str):
-        return self.route(path, method="GET")
+        return self.route(path, methods=["GET"])
 
     def post(self, path: str):
-        return self.route(path, method="POST")
+        return self.route(path, methods=["POST"])
 
     def execute_handler(self, request: Request) -> Response:
-        for (path, method), handler_fn in self.handlers.items():
-            if request.path == path and (method is None or request.method == method):
+        for (path, methods), handler_fn in self.handlers.items():
+            if request.path == path and (methods is None or request.method in methods):
                 response_obj = handler_fn(request)
                 return Response.from_python_obj(response_obj)
 
