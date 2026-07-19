@@ -10,6 +10,14 @@ Microhive is aiming to provide a similar programming interface as FastAPI or Fla
 ### Usage
 If you run it with MicroPython, first make sure to connect to a WiFi or start a hotspot on the MCU. If running on an ESP8266, you can follow up on the [official networking documentation](https://docs.micropython.org/en/latest/esp8266/quickref.html#networking).
 
+Then, you can load `microhive` using
+```py
+import mip
+mip.install("github:bnyro/microhive/microhive.py")
+```
+
+Now, you can create your first `microhive` app:
+
 ```py
 from microhive import Request, Response, Server
 
@@ -32,7 +40,7 @@ def method(request: Request):
 server.run()
 ```
 
-You can now reach the website by opening the IP address of the MCU (can be obtained with `wlan.ipconfig("addr4")`) in your browser.
+You can reach the website by opening the IP address of the MCU (can be obtained with `wlan.ipconfig("addr4")`) in your browser.
 
 ### Related Projects
 - [micropyserver](https://github.com/troublegum/micropyserver)
