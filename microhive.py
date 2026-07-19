@@ -1,10 +1,20 @@
-import traceback
 import socket
 
 MAX_CONCURRENT_REQUESTS = 10
 HTTP_VERSION = "HTTP/1.1"
 MAX_REQUEST_SIZE_BYTES = 10 * 1024
 HTTP_STATUS_OK = 200
+
+
+def _print_exc(e: Exception):
+    try:
+        import traceback
+
+        print(traceback.format_exc())
+    except Exception as _:
+        import sys
+
+        sys.print_exception(e)  # ty:ignore[unresolved-attribute]
 
 
 class Request:
@@ -139,7 +149,7 @@ class Server:
             response = self.execute_handler(request)
         except Exception as e:
             if self.debug:
-                print(traceback.format_exc())
+                _print_exc(e)
 
             response = Response(500, str(e).encode())
 
