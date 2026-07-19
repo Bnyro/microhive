@@ -200,14 +200,3 @@ class Server:
                 return Response.from_python_obj(response_obj)
 
         return Response(404, b"Not found")
-
-
-server = Server("localhost", 8080)
-
-
-@server.route("/")
-def foo(request: Request):
-    return {"hello": "world"}
-
-
-server.run()

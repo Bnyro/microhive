@@ -20,7 +20,7 @@ def root(request: Request):
 
 @server.get("/hello")
 def hello(request: Request):
-    return Response(418, "I'm a teapot")
+    return Response(418, b"I'm a teapot")
 
 @server.route("/method")
 def method(request: Request):
