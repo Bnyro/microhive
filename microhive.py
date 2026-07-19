@@ -60,7 +60,7 @@ class Request:
             if "=" not in arg:
                 continue
 
-            key, value = arg.split("=", maxsplit=1)
+            key, value = arg.split("=", 1)
             query[key] = Request._decode_uri_component(value)
 
         return query
@@ -69,7 +69,7 @@ class Request:
         lines = data.split("\r\n")
 
         method, full_path, _http_version = lines[0].split(" ")
-        path_split = full_path.split("?", maxsplit=1)
+        path_split = full_path.split("?", 1)
         if len(path_split) == 2:
             path, query_string = path_split
         else:
@@ -80,7 +80,7 @@ class Request:
         header_lines = lines[1:]
         headers = {}
         for line in header_lines:
-            key, value = line.split(":", maxsplit=1)
+            key, value = line.split(":", 1)
             headers[key.strip().lower()] = value.strip()
 
         content_length = int(headers.get("content-length", 0))
