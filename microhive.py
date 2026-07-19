@@ -28,6 +28,7 @@ class Request:
     def form_data(self):
         return Request._parse_query_str(self.text())
 
+    # only supports ASCII, not UTF-8
     def _decode_uri_component(text: str) -> str:
         i = 0
         out = ""
