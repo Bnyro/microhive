@@ -112,9 +112,10 @@ class Response:
 
 
 class Server:
-    def __init__(self, addr: str, port: int):
+    def __init__(self, addr: str, port: int, debug: bool = False):
         self.addr = addr
         self.port = port
+        self.debug = debug
         self.handlers = {}
 
     def run(self):
@@ -136,6 +137,9 @@ class Server:
             request = self.read_request(conn)
             response = self.execute_handler(request)
         except Exception as e:
+            if self.debug:
+                raise e
+
             response = Response(500, str(e).encode())
 
         self.send_response(conn, response)
