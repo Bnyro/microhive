@@ -1,3 +1,4 @@
+import traceback
 import socket
 
 MAX_CONCURRENT_REQUESTS = 10
@@ -138,7 +139,7 @@ class Server:
             response = self.execute_handler(request)
         except Exception as e:
             if self.debug:
-                raise e
+                print(traceback.format_exc())
 
             response = Response(500, str(e).encode())
 

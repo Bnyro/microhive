@@ -1,6 +1,6 @@
 from microhive import Request, Response, Server
 
-server = Server("0.0.0.0", 8080)
+server = Server("0.0.0.0", 8080, debug=True)
 
 
 @server.get("/")
